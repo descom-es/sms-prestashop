@@ -1,0 +1,5 @@
+{
+    "require": {
+        "descom/php-sms": "^1.0"
+    }
+}
