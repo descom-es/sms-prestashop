@@ -20,7 +20,7 @@ class DescomSMS extends Module
 		parent::__construct();
 
 		$this->displayName = $this->l('DescomSMS');
-		$this->description = $this->l('Módulo para el envío de SMS.');
+		$this->description = $this->l('Send SMS module');
 
 		$this->confirmUninstall = $this->l('Are you sure you want to uninstall?');
 
@@ -103,14 +103,14 @@ class DescomSMS extends Module
 			'input' => array(
 				array(
 					'type' => 'text',
-					'label' => $this->l('Usuario DescomSMS'),
+					'label' => $this->l('DescomSMS user'),
 					'name' => 'DESCOMSMS_USER',
 					'class' => 'lg',
 					'required' => true
 				),
 				array(
 					'type' => 'password',
-					'label' => $this->l('Password DescomSMS'),
+					'label' => $this->l('DescomSMS password'),
 					'name' => 'DESCOMSMS_PASS',
 					'class' => 'lg',
 					'required' => true
