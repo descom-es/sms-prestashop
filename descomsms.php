@@ -32,20 +32,31 @@ class DescomSMS extends Module
 		if (!parent::install() ||
 			!$this->registerHook('actionOrderStatusPostUpdate') ||
 			!$this->registerHook('actionUpdateQuantity') ||
-      !$this->registerHook('displayBackOfficeHeader')
-		){
-			return false;
-		}
-		else{
-			$tab = New Tab();
-			$tab->id_parent = 0;
-			$tab->class_name = 'AdminDescomsms';
-			$tab->active = 1;
-			$tab->module = $this->name;
-			$tab->name[$this->context->language->id] = "DescomSMS";
-			$tab->add();
-			return true;
-		}
+        !$this->registerHook('displayBackOfficeHeader')
+        ){
+        	return false;
+        }
+        else{
+            $ps_version = explode('.', _PS_VERSION_);
+            if($ps_version[1]<=6){
+            	$tab = New Tab();
+            	$tab->id_parent = 0;
+            	$tab->class_name = 'AdminDescomsms';
+            	$tab->active = 1;
+            	$tab->module = $this->name;
+            	$tab->name[$this->context->language->id] = "DescomSMS";
+            	return $tab->add();
+            }
+            else{
+                $tab = New Tab();
+            	$tab->id_parent = (int) Tab::getIdFromClassName('CONFIGURE');
+            	$tab->class_name = 'AdminDescomsms';
+            	$tab->active = 1;
+            	$tab->module = $this->name;
+            	$tab->name[$this->context->language->id] = "DescomSMS";
+            	return $tab->add();
+            }
+        }
 	}
 
 	public function uninstall()
@@ -154,8 +165,8 @@ class DescomSMS extends Module
 
 		// Load current value
 		$helper->fields_value['DESCOMSMS_USER'] = Configuration::get('DESCOMSMS_USER');
-    if(!empty(Configuration::get('DESCOMSMS_KEY')))
-		  $helper->fields_value['DESCOMSMS_PASS'] = $this->my_decrypt(Configuration::get('DESCOMSMS_PASS'), Configuration::get('DESCOMSMS_KEY'));
+        if(!empty(Configuration::get('DESCOMSMS_KEY')))
+		      $helper->fields_value['DESCOMSMS_PASS'] = $this->my_decrypt(Configuration::get('DESCOMSMS_PASS'), Configuration::get('DESCOMSMS_KEY'));
 
 		return $helper->generateForm($fields_form);
 	}
@@ -186,7 +197,7 @@ class DescomSMS extends Module
 				$data["message"] = $this->getSMSText(Configuration::get('DESCOMSMS_TEXT_ORDER_PAY'), $order->id, "", "");
 			}
 			elseif($order->current_state == 4 ){
-        $data["message"] = $this->getSMSText(Configuration::get('DESCOMSMS_TEXT_ORDER_SEND'), $order->id, "", "");
+                $data["message"] = $this->getSMSText(Configuration::get('DESCOMSMS_TEXT_ORDER_SEND'), $order->id, "", "");
 			}
 
 			if(!empty($data["mobile"])){
@@ -237,14 +248,14 @@ class DescomSMS extends Module
 		}
 	}
 
-  public function hookDisplayBackOfficeHeader($params) {
-    $this->context->controller->addCSS(($this->_path) . 'css/menuTabIcon.css');
-  }
+    public function hookDisplayBackOfficeHeader($params) {
+      $this->context->controller->addCSS(($this->_path) . 'css/menuTabIcon.css');
+    }
 
 
-  /**************
-  *** FUNCTIONS
-  **************/
+    /**************
+    *** FUNCTIONS
+    **************/
 	public function my_encrypt($data, $key) {
 		$encryption_key = base64_decode($key);
 		$iv = openssl_random_pseudo_bytes(openssl_cipher_iv_length('aes-256-cbc'));
@@ -294,36 +305,36 @@ class DescomSMS extends Module
 		return (bool)$idModule;
 	}
 
-  public function SaveSender($sender){
-    Configuration::updateValue('DESCOMSMS_SENDER', $sender);
-  }
+    public function SaveSender($sender){
+        Configuration::updateValue('DESCOMSMS_SENDER', $sender);
+    }
 
-  public function SaveAlertOrderPay($checkPay, $textPay){
-    Configuration::updateValue('DESCOMSMS_CHECK_ORDER_PAY', $checkPay);
-    Configuration::updateValue('DESCOMSMS_TEXT_ORDER_PAY', $textPay);
-  }
+    public function SaveAlertOrderPay($checkPay, $textPay){
+        Configuration::updateValue('DESCOMSMS_CHECK_ORDER_PAY', $checkPay);
+        Configuration::updateValue('DESCOMSMS_TEXT_ORDER_PAY', $textPay);
+    }
 
-  public function SaveAlertOrderSend($checkSend, $textSend){
-    Configuration::updateValue('DESCOMSMS_CHECK_ORDER_SEND', $checkSend);
-    Configuration::updateValue('DESCOMSMS_TEXT_ORDER_SEND', $textSend);
-  }
+    public function SaveAlertOrderSend($checkSend, $textSend){
+        Configuration::updateValue('DESCOMSMS_CHECK_ORDER_SEND', $checkSend);
+        Configuration::updateValue('DESCOMSMS_TEXT_ORDER_SEND', $textSend);
+    }
 
-  public function SaveAlertProductStock($checkStock, $textStock){
-    Configuration::updateValue('DESCOMSMS_CHECK_PRODUCT_STOCK', $checkStock);
-    Configuration::updateValue('DESCOMSMS_TEXT_PRODUCT_STOCK', $textStock);
-  }
+    public function SaveAlertProductStock($checkStock, $textStock){
+        Configuration::updateValue('DESCOMSMS_CHECK_PRODUCT_STOCK', $checkStock);
+        Configuration::updateValue('DESCOMSMS_TEXT_PRODUCT_STOCK', $textStock);
+    }
 
-  public function getSMSText($text, $orderId, $productName, $productStock){
-    $text = str_replace('[shop_name]', Configuration::get('PS_SHOP_NAME'), $text);
-    $text = str_replace('[order_id]', $orderId, $text);
-    $text = str_replace('[product_name]', $productName, $text);
-    $text = str_replace('[product_stock]', $productStock, $text);
-    return $text;
-  }
+    public function getSMSText($text, $orderId, $productName, $productStock){
+        $text = str_replace('[shop_name]', Configuration::get('PS_SHOP_NAME'), $text);
+        $text = str_replace('[order_id]', $orderId, $text);
+        $text = str_replace('[product_name]', $productName, $text);
+        $text = str_replace('[product_stock]', $productStock, $text);
+        return $text;
+    }
 
-  /**************
-  *** SMS API
-  **************/
+    /**************
+    *** SMS API
+    **************/
 	public function SendSMS($data){
 		try {
 			$sms = new \Descom\Sms\Sms(new \Descom\Sms\Auth\AuthUser($data["user"], $data["pass"]));
@@ -338,21 +349,21 @@ class DescomSMS extends Module
 		}
 	}
 
-  public function GetCreditsSMS($data){
+    public function GetCreditsSMS($data){
 		try {
-      $sms = new \Descom\Sms\Sms(new \Descom\Sms\Auth\AuthUser($data["user"], $data["pass"]));
-      $result = $sms->getBalance();
-      return $result;
+            $sms = new \Descom\Sms\Sms(new \Descom\Sms\Auth\AuthUser($data["user"], $data["pass"]));
+            $result = $sms->getBalance();
+            return $result;
 		} catch (Exception $e) {
 			error_log('DESCOMSMS module - Error geting credits: ' . $e->getMessage());//TODO
 		}
 	}
 
-  public function GetSendersSMS($data){
+    public function GetSendersSMS($data){
 		try {
-      $sms = new \Descom\Sms\Sms(new \Descom\Sms\Auth\AuthUser($data["user"], $data["pass"]));
-      $result = $sms->getSenderID();
-      return $result;
+            $sms = new \Descom\Sms\Sms(new \Descom\Sms\Auth\AuthUser($data["user"], $data["pass"]));
+            $result = $sms->getSenderID();
+            return $result;
 		} catch (Exception $e) {
 			error_log('DESCOMSMS module - Error geting credits: ' . $e->getMessage());//TODO
 		}
