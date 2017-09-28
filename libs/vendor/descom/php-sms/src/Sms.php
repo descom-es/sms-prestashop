@@ -19,6 +19,13 @@ class Sms
     ];
 
     /**
+     * Define the app and version of client.
+     *
+     * @var string
+     */
+    private $app = 'php-sms v1.0.8';
+
+    /**
      * Define if then sent is dryrun.
      *
      * @var bool
@@ -49,6 +56,28 @@ class Sms
     public function __construct(Auth $auth)
     {
         $this->headers = array_merge($this->headers, $auth->headers());
+
+        $this->headers = array_merge($this->headers, [
+            'DSMS-App' => $this->app,
+        ]);
+    }
+
+    /**
+     * Set the app and version of client.
+     *
+     * @param string $app
+     *
+     * @var string
+     */
+    public function setApp($app)
+    {
+        $this->app = $app;
+
+        $this->headers = array_merge($this->headers, [
+            'DSMS-App' => $this->app,
+        ]);
+
+        return $this;
     }
 
     /**
