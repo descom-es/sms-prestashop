@@ -314,10 +314,10 @@ class DescomSMS extends Module
   }
 
   public function getSMSText($text, $orderId, $productName, $productStock){
-    $text = str_replace([shop_name], Configuration::get('PS_SHOP_NAME'), $text);
-    $text = str_replace([order_id], $orderId, $text);
-    $text = str_replace([product_name], $productName, $text);
-    $text = str_replace([product_stock], $productStock, $text);
+    $text = str_replace('[shop_name]', Configuration::get('PS_SHOP_NAME'), $text);
+    $text = str_replace('[order_id]', $orderId, $text);
+    $text = str_replace('[product_name]', $productName, $text);
+    $text = str_replace('[product_stock]', $productStock, $text);
     return $text;
   }
 

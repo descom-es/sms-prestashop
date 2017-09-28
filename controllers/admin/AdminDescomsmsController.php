@@ -11,7 +11,7 @@ class AdminDescomsmsController extends ModuleAdminController
     public function postProcess()
     {
         if (Tools::isSubmit('submit_sender')) {
-            Configuration::updateValue('DESCOMSMS_USER', Tools::getValue('selectSender'));
+            Configuration::updateValue('DESCOMSMS_SENDER', Tools::getValue('selectSender'));
         }
 
         if (Tools::isSubmit('submit_pay')) {
