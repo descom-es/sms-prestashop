@@ -190,7 +190,7 @@ class descomsms extends Module
                 'user'   => Configuration::get('DESCOMSMS_USER'),
                 'pass'   => $this->my_decrypt(Configuration::get('DESCOMSMS_PASS'), Configuration::get('DESCOMSMS_KEY')),
                 'sender' => Configuration::get('DESCOMSMS_SENDER'),
-                'mobile' => '+' . $country->call_prefix . $address->phone_mobile,
+                'mobile' => '+'.$country->call_prefix.$address->phone_mobile,
             ];
 
             // The message we will be sending
@@ -237,7 +237,7 @@ class descomsms extends Module
                             'user'    => Configuration::get('DESCOMSMS_USER'),
                             'pass'    => $this->my_decrypt(Configuration::get('DESCOMSMS_PASS'), Configuration::get('DESCOMSMS_KEY')),
                             'sender'  => Configuration::get('DESCOMSMS_SENDER'),
-                            'mobile'  => '+' . $country->call_prefix . $mobile['phone_mobile'],
+                            'mobile'  => '+'.$country->call_prefix.$mobile['phone_mobile'],
                             'message' => $this->getSMSText(Configuration::get('DESCOMSMS_TEXT_PRODUCT_STOCK'), '', $name, $params['quantity']),
                         ];
 
@@ -355,6 +355,7 @@ class descomsms extends Module
     public function SendSMS($data)
     {
         error_log(json_encode($data));
+
         try {
             $sms = new \Descom\Sms\Sms(new \Descom\Sms\Auth\AuthUser($data['user'], $data['pass']));
             $message = new \Descom\Sms\Message();
