@@ -1,7 +1,7 @@
 <?php
 
 global $_MODULE;
-$_MODULE = array();
+$_MODULE = [];
 $_MODULE['<{descomsms}prestashop>descomsms_f4f1671456d4ef06ca3621fb47c36006'] = 'DescomSMS';
 $_MODULE['<{descomsms}prestashop>descomsms_173db619910d07023188116bb0506da2'] = 'Módulo de envío de SMS';
 $_MODULE['<{descomsms}prestashop>descomsms_876f23178c29dc2552c0b48bf23cd9bd'] = '¿Estás seguro de que quieres desisnstalarlo?';
