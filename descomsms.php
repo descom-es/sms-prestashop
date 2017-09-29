@@ -183,13 +183,14 @@ class descomsms extends Module
         $order = new Order($params['id_order']);
         $address = new Address($order->id_address_delivery);
         $customer = new Customer($order->id_customer);
+        $country = new Country($address->id_country);
 
         if ((($order->current_state == 2 || $order->current_state == 12) && Configuration::get('DESCOMSMS_CHECK_ORDER_PAY') == 'on') || ($order->current_state == 4 && Configuration::get('DESCOMSMS_CHECK_ORDER_SEND') == 'on')) {
             $data = [
                 'user'   => Configuration::get('DESCOMSMS_USER'),
                 'pass'   => $this->my_decrypt(Configuration::get('DESCOMSMS_PASS'), Configuration::get('DESCOMSMS_KEY')),
                 'sender' => Configuration::get('DESCOMSMS_SENDER'),
-                'mobile' => $address->phone_mobile,
+                'mobile' => '+' . $country->call_prefix . $address->phone_mobile,
             ];
 
             // The message we will be sending
@@ -201,7 +202,7 @@ class descomsms extends Module
 
             if (!empty($data['mobile'])) {
                 $result = $this->SendSMS($data);
-                error_log(json_encode($result)); //TODO
+                //error_log(json_encode($result)); //TODO
             } else {
                 error_log('There is no mobile phone number for this address:'.$order->id_address_delivery); //TODO
             }
@@ -211,7 +212,7 @@ class descomsms extends Module
     //Hook product stock change
     public function hookActionUpdateQuantity($params)
     {
-        if ($this->CheckModuleInstaled('mailalerts') && Configuration::get('DESCOMSMS_CHECK_AVISO_STOCK') == 'on') {
+        if ($this->CheckModuleInstaled('mailalerts') && Configuration::get('DESCOMSMS_CHECK_PRODUCT_STOCK') == 'on') {
             //Avoid entering 2 times in the hook when modifying product with combinations stock
             if (!$params['id_product_attribute']) {
                 $sql = 'SELECT count(*) FROM '._DB_PREFIX_.'product_attribute where id_product = '.$params['id_product'];
@@ -224,10 +225,11 @@ class descomsms extends Module
             $results = $this->db->ExecuteS($sql);
 
             foreach ($results as $row) {
-                $sql = 'SELECT phone_mobile FROM '._DB_PREFIX_.'address WHERE id_customer = '.$row['id_customer'];
+                $sql = 'SELECT phone_mobile, id_country FROM '._DB_PREFIX_.'address WHERE id_customer = '.$row['id_customer'];
                 $mobiles = $this->db->ExecuteS($sql);
                 foreach ($mobiles as $mobile) {
                     if (!empty($mobile['phone_mobile'])) {
+                        $country = new Country($mobile['id_country']);
                         $sql = 'SELECT name FROM '._DB_PREFIX_.'product_lang pl, '._DB_PREFIX_.'customer c WHERE pl.id_lang = c.id_lang AND pl.id_product = '.$params['id_product'].' AND c.id_customer = '.$row['id_customer'];
                         $name = $this->db->getValue($sql);
 
@@ -235,11 +237,12 @@ class descomsms extends Module
                             'user'    => Configuration::get('DESCOMSMS_USER'),
                             'pass'    => $this->my_decrypt(Configuration::get('DESCOMSMS_PASS'), Configuration::get('DESCOMSMS_KEY')),
                             'sender'  => Configuration::get('DESCOMSMS_SENDER'),
-                            'mobile'  => $mobile['phone_mobile'],
-                            'message' => $this->getSMSText(Configuration::get('DESCOMSMS_TEXT_ORDER_SEND'), '', $name, $params['quantity']),
+                            'mobile'  => '+' . $country->call_prefix . $mobile['phone_mobile'],
+                            'message' => $this->getSMSText(Configuration::get('DESCOMSMS_TEXT_PRODUCT_STOCK'), '', $name, $params['quantity']),
                         ];
+
                         $result = $this->SendSMS($data);
-                        error_log(json_encode($result)); //TODO
+                        //error_log(json_encode($result)); //TODO
                     }
                 }
             }
@@ -351,6 +354,7 @@ class descomsms extends Module
     **************/
     public function SendSMS($data)
     {
+        error_log(json_encode($data));
         try {
             $sms = new \Descom\Sms\Sms(new \Descom\Sms\Auth\AuthUser($data['user'], $data['pass']));
             $message = new \Descom\Sms\Message();
