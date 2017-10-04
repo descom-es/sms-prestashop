@@ -3,8 +3,17 @@
 <div class="panel panel-default">
     <div class="panel-heading">{l s='General information' mod='descomsms'}</div>
     <div class="panel-body" style="font-size: 1.2em;">
-        <p><strong>{l s='User' mod='descomsms'}: </strong> {$user}</p>
-        <p><strong>{l s='Available credit' mod='descomsms'}: </strong> {$credits}</p>
+        <div class="col-md-6">
+            <p><strong>{l s='User' mod='descomsms'}: </strong> {$user}</p>
+            <p><strong>{l s='Available credit' mod='descomsms'}: </strong> {$credits}</p>
+        </div>
+        <div class="col-md-6">
+            <p><strong>{l s='Current version' mod='descomsms'}: </strong> {$version}</p>
+            <p><strong>{l s='Latest version' mod='descomsms'}: </strong> {$version_latest}</p>
+            {if $version_latest_url != '' && $need_update}
+                <a class="btn btn-info" href="{$version_latest_url}" target="blank_">{l s='Update' mod='descomsms'}</a>
+            {/if}
+        </div>
     </div>
 </div>
 
