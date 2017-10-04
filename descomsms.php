@@ -215,23 +215,27 @@ class descomsms extends Module
             foreach ($results as $row) {
                 $sql = 'SELECT id_address FROM '._DB_PREFIX_.'address WHERE id_customer = '.$row['id_customer'];
                 $addresses = $this->db->ExecuteS($sql);
+                $sended = false;
                 foreach ($addresses as $address) {
-                    $address = new Address($address['id_address']);
-                    $country = new Country($address->id_country);
-                    if (!empty($this->GetPhoneMobile($address, $country))) {
-                        $sql = 'SELECT name FROM '._DB_PREFIX_.'product_lang pl, '._DB_PREFIX_.'customer c WHERE pl.id_lang = c.id_lang AND pl.id_product = '.$params['id_product'].' AND c.id_customer = '.$row['id_customer'];
-                        $name = $this->db->getValue($sql);
+                    if(!($sended && (Configuration::get('DESCOMSMS_CHECK_PRODUCT_STOCK_ALL_ADDRESSES' != 'on')))){
+                        $address = new Address($address['id_address']);
+                        $country = new Country($address->id_country);
+                        if (!empty($this->GetPhoneMobile($address, $country))) {
+                            $sql = 'SELECT name FROM '._DB_PREFIX_.'product_lang pl, '._DB_PREFIX_.'customer c WHERE pl.id_lang = c.id_lang AND pl.id_product = '.$params['id_product'].' AND c.id_customer = '.$row['id_customer'];
+                            $name = $this->db->getValue($sql);
 
-                        $data = [
-                            'user'    => Configuration::get('DESCOMSMS_USER'),
-                            'pass'    => $this->MyDecrypt(Configuration::get('DESCOMSMS_PASS'), Configuration::get('DESCOMSMS_KEY')),
-                            'sender'  => Configuration::get('DESCOMSMS_SENDER'),
-                            'message' => $this->GetSMSText(Configuration::get('DESCOMSMS_TEXT_PRODUCT_STOCK'), '', $name, $params['quantity']),
-                        ];
-                        $data['mobile'] = $this->GetPhoneMobile($address, $country);
+                            $data = [
+                                'user'    => Configuration::get('DESCOMSMS_USER'),
+                                'pass'    => $this->MyDecrypt(Configuration::get('DESCOMSMS_PASS'), Configuration::get('DESCOMSMS_KEY')),
+                                'sender'  => Configuration::get('DESCOMSMS_SENDER'),
+                                'message' => $this->GetSMSText(Configuration::get('DESCOMSMS_TEXT_PRODUCT_STOCK'), '', $name, $params['quantity']),
+                            ];
+                            $data['mobile'] = $this->GetPhoneMobile($address, $country);
 
-                        $result = $this->SendSMS($data);
-                        //error_log(json_encode($result)); //TODO
+                            $result = $this->SendSMS($data);
+                            $sended = true;
+                            //error_log(json_encode($result)); //TODO
+                        }
                     }
                 }
             }
@@ -297,6 +301,9 @@ class descomsms extends Module
         }
         if (empty(Configuration::get('DESCOMSMS_TEXT_PRODUCT_STOCK'))) {
             Configuration::updateValue('DESCOMSMS_TEXT_PRODUCT_STOCK', '[shop_name]: El producto [product_name] vuelve a tener stock ([product_stock] uds. disponibles).');
+        }
+        if (empty(Configuration::get('DESCOMSMS_TEXT_PRODUCT_STOCK_ALL_ADDRESSES'))) {
+            Configuration::updateValue('DESCOMSMS_TEXT_PRODUCT_STOCK_ALL_ADDRESSES', 'off');
         }
     }
 
@@ -430,11 +437,10 @@ class descomsms extends Module
             $message = new \Descom\Sms\Message();
             $message->addTo($data['mobile'])->setSenderID($data['sender'])->setText($data['message']);
             $result = $sms->addMessage($message)
-                    ->setDryrun(true)
+                    ->setDryrun(false)
                     ->send();
 
             error_log(json_encode($data));
-            error_log(json_encode($result));
             return $result;
         } catch (Exception $e) {
             error_log('DESCOMSMS module - Error sending message: '.$e->getMessage()); //TODO

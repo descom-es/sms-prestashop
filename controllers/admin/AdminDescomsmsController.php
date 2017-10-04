@@ -15,17 +15,18 @@ class AdminDescomsmsController extends ModuleAdminController
         }
 
         if (Tools::isSubmit('submit_pay')) {
-            Configuration::updateValue('DESCOMSMS_CHECK_PRODUCT_STOCK', Tools::getValue('checkPay'));
+            Configuration::updateValue('DESCOMSMS_CHECK_ORDER_PAY', Tools::getValue('checkPay'));
             Configuration::updateValue('DESCOMSMS_TEXT_ORDER_PAY', Tools::getValue('textareaPay'));
         }
 
         if (Tools::isSubmit('submit_send')) {
-            Configuration::updateValue('DESCOMSMS_CHECK_PRODUCT_STOCK', Tools::getValue('checkSend'));
+            Configuration::updateValue('DESCOMSMS_CHECK_ORDER_SEND', Tools::getValue('checkSend'));
             Configuration::updateValue('DESCOMSMS_TEXT_ORDER_SEND', Tools::getValue('textareaSend'));
         }
 
         if (Tools::isSubmit('submit_stock')) {
             Configuration::updateValue('DESCOMSMS_CHECK_PRODUCT_STOCK', Tools::getValue('checkStock'));
+            Configuration::updateValue('DESCOMSMS_CHECK_PRODUCT_STOCK_ALL_ADDRESSES', Tools::getValue('checkAllAdresses'));
             Configuration::updateValue('DESCOMSMS_TEXT_PRODUCT_STOCK', Tools::getValue('textareaStock'));
         }
     }
@@ -41,6 +42,7 @@ class AdminDescomsmsController extends ModuleAdminController
           'check_order_send'    => strval(Configuration::get('DESCOMSMS_CHECK_ORDER_SEND')),
           'text_order_send'     => strval(Configuration::get('DESCOMSMS_TEXT_ORDER_SEND')),
           'check_product_stock' => strval(Configuration::get('DESCOMSMS_CHECK_PRODUCT_STOCK')),
+          'check_product_stock_all_addresses'  => strval(Configuration::get('DESCOMSMS_CHECK_PRODUCT_STOCK_ALL_ADDRESSES')),
           'text_product_stock'  => strval(Configuration::get('DESCOMSMS_TEXT_PRODUCT_STOCK')),
           'version'             => strval($this->module->version),
           'need_update'         => false,

@@ -1,5 +1,3 @@
-<h1>DescomSMS</h1>
-
 <div class="panel panel-default">
     <div class="panel-heading">{l s='General information' mod='descomsms'}</div>
     <div class="panel-body" style="font-size: 1.2em;">
@@ -89,6 +87,13 @@
                 <div class="checkbox">
                     <label>
                         <input id="checkStock" name="checkStock" type="checkbox" {if $check_product_stock=='on'}checked{/if}>{l s='Send SMS to customers who have asked to be notified when the stock of a certain product is replenished.' mod='descomsms'}
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label data-toggle="tooltip" title="{l s='If uncheck only one SMS will be sent to the first number found' mod='descomsms'}">
+                        <input id="checkAllAdresses" name="checkAllAdresses" type="checkbox" {if $check_product_stock_all_addresses=='on'}checked{/if}>{l s='Send SMS to all client addresses.' mod='descomsms'}
                     </label>
                 </div>
             </div>
