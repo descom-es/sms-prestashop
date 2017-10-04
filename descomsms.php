@@ -6,18 +6,22 @@ if (!defined('_PS_VERSION_')) {
     exit;
 }
 
+define('VERSION', '1.0.1');
+define('LATEST_VERSION_URL', 'https://www.descomsms.com/prestashop/latest.php');
+
 class descomsms extends Module
 {
     public function __construct()
     {
         $this->name = 'descomsms';
         $this->tab = 'others';
-        $this->version = '1.0.0';
+        $this->version = VERSION;
         $this->author = 'Descom';
-        $this->need_instance = 1;
-        $this->is_configurable = 1;
+        $this->need_instance = 0;
+        $this->is_configurable = 0;
         $this->ps_versions_compliancy = ['min' => '1.6', 'max' => _PS_VERSION_];
         $this->bootstrap = true;
+        $this->versionURL = LATEST_VERSION_URL;
 
         parent::__construct();
 
@@ -38,26 +42,11 @@ class descomsms extends Module
         ) {
             return false;
         } else {
-            $ps_version = explode('.', _PS_VERSION_);
-            if ($ps_version[1] <= 6) {
-                $tab = new Tab();
-                $tab->id_parent = 0;
-                $tab->class_name = 'AdminDescomsms';
-                $tab->active = 1;
-                $tab->module = $this->name;
-                $tab->name[$this->context->language->id] = 'DescomSMS';
+            $this->CreateTab("AdminDescomsms", "DescomSMS", 0);
+            //$idParent = Tab::getIdFromClassName("SMSpubli");
+            //$this->CreateTab("Home", $this->l('Home'), $idParent);
 
-                return $tab->add();
-            } else {
-                $tab = new Tab();
-                $tab->id_parent = (int) Tab::getIdFromClassName('CONFIGURE');
-                $tab->class_name = 'AdminDescomsms';
-                $tab->active = 1;
-                $tab->module = $this->name;
-                $tab->name[$this->context->language->id] = 'DescomSMS';
-
-                return $tab->add();
-            }
+            $this->InitConfigValues();
         }
     }
 
@@ -66,8 +55,7 @@ class descomsms extends Module
         if (!parent::uninstall() || !Configuration::deleteByName('MYMODULE_NAME')) {
             return false;
         } else {
-            $tab = new Tab(Tab::getIdFromClassName('AdminDescomsms'));
-            $tab->delete();
+            $this->DeleteTab('AdminDescomsms');
         }
 
         return true;
@@ -92,7 +80,7 @@ class descomsms extends Module
                 $output .= $this->displayError($this->l('Invalid Configuration value'));
             } else {
                 Configuration::updateValue('DESCOMSMS_USER', $user);
-                Configuration::updateValue('DESCOMSMS_PASS', $this->my_encrypt($pass, $key));
+                Configuration::updateValue('DESCOMSMS_PASS', $this->MyEncrypt($pass, $key));
                 $this->SetHookModulePosition();
 
                 $output .= $this->displayConfirmation($this->l('Settings updated'));
@@ -166,7 +154,7 @@ class descomsms extends Module
         // Load current value
         $helper->fields_value['DESCOMSMS_USER'] = Configuration::get('DESCOMSMS_USER');
         if (!empty(Configuration::get('DESCOMSMS_KEY'))) {
-            $helper->fields_value['DESCOMSMS_PASS'] = $this->my_decrypt(Configuration::get('DESCOMSMS_PASS'), Configuration::get('DESCOMSMS_KEY'));
+            $helper->fields_value['DESCOMSMS_PASS'] = $this->MyDecrypt(Configuration::get('DESCOMSMS_PASS'), Configuration::get('DESCOMSMS_KEY'));
         }
 
         return $helper->generateForm($fields_form);
@@ -188,16 +176,16 @@ class descomsms extends Module
         if ((($order->current_state == 2 || $order->current_state == 12) && Configuration::get('DESCOMSMS_CHECK_ORDER_PAY') == 'on') || ($order->current_state == 4 && Configuration::get('DESCOMSMS_CHECK_ORDER_SEND') == 'on')) {
             $data = [
                 'user'   => Configuration::get('DESCOMSMS_USER'),
-                'pass'   => $this->my_decrypt(Configuration::get('DESCOMSMS_PASS'), Configuration::get('DESCOMSMS_KEY')),
+                'pass'   => $this->MyDecrypt(Configuration::get('DESCOMSMS_PASS'), Configuration::get('DESCOMSMS_KEY')),
                 'sender' => Configuration::get('DESCOMSMS_SENDER'),
-                'mobile' => '+'.$country->call_prefix.$address->phone_mobile,
             ];
+            $data['mobile'] = $this->GetPhoneMobile($address, $country);
 
             // The message we will be sending
             if ($order->current_state == 2 || $order->current_state == 12) {
-                $data['message'] = $this->getSMSText(Configuration::get('DESCOMSMS_TEXT_ORDER_PAY'), $order->id, '', '');
+                $data['message'] = $this->GetSMSText(Configuration::get('DESCOMSMS_TEXT_ORDER_PAY'), $order->id, '', '');
             } elseif ($order->current_state == 4) {
-                $data['message'] = $this->getSMSText(Configuration::get('DESCOMSMS_TEXT_ORDER_SEND'), $order->id, '', '');
+                $data['message'] = $this->GetSMSText(Configuration::get('DESCOMSMS_TEXT_ORDER_SEND'), $order->id, '', '');
             }
 
             if (!empty($data['mobile'])) {
@@ -225,21 +213,22 @@ class descomsms extends Module
             $results = $this->db->ExecuteS($sql);
 
             foreach ($results as $row) {
-                $sql = 'SELECT phone_mobile, id_country FROM '._DB_PREFIX_.'address WHERE id_customer = '.$row['id_customer'];
-                $mobiles = $this->db->ExecuteS($sql);
-                foreach ($mobiles as $mobile) {
-                    if (!empty($mobile['phone_mobile'])) {
-                        $country = new Country($mobile['id_country']);
+                $sql = 'SELECT id_address FROM '._DB_PREFIX_.'address WHERE id_customer = '.$row['id_customer'];
+                $addresses = $this->db->ExecuteS($sql);
+                foreach ($addresses as $address) {
+                    $address = new Address($address['id_address']);
+                    $country = new Country($address->id_country);
+                    if (!empty($this->GetPhoneMobile($address, $country))) {
                         $sql = 'SELECT name FROM '._DB_PREFIX_.'product_lang pl, '._DB_PREFIX_.'customer c WHERE pl.id_lang = c.id_lang AND pl.id_product = '.$params['id_product'].' AND c.id_customer = '.$row['id_customer'];
                         $name = $this->db->getValue($sql);
 
                         $data = [
                             'user'    => Configuration::get('DESCOMSMS_USER'),
-                            'pass'    => $this->my_decrypt(Configuration::get('DESCOMSMS_PASS'), Configuration::get('DESCOMSMS_KEY')),
+                            'pass'    => $this->MyDecrypt(Configuration::get('DESCOMSMS_PASS'), Configuration::get('DESCOMSMS_KEY')),
                             'sender'  => Configuration::get('DESCOMSMS_SENDER'),
-                            'mobile'  => '+'.$country->call_prefix.$mobile['phone_mobile'],
-                            'message' => $this->getSMSText(Configuration::get('DESCOMSMS_TEXT_PRODUCT_STOCK'), '', $name, $params['quantity']),
+                            'message' => $this->GetSMSText(Configuration::get('DESCOMSMS_TEXT_PRODUCT_STOCK'), '', $name, $params['quantity']),
                         ];
+                        $data['mobile'] = $this->GetPhoneMobile($address, $country);
 
                         $result = $this->SendSMS($data);
                         //error_log(json_encode($result)); //TODO
@@ -257,7 +246,73 @@ class descomsms extends Module
     /**************
     *** FUNCTIONS
     **************/
-    public function my_encrypt($data, $key)
+    public function CreateTab($tabClass, $tabName, $idParent)
+    {
+        $tab = new Tab();
+        foreach(Language::getLanguages(false) as $lang){
+            $tab->name[(int) $lang['id_lang']] = $tabName;
+        }
+        $tab->class_name = $tabClass;
+        $tab->module = $this->name;
+        $tab->id_parent = $idParent;
+
+        if (!$tab->save()) {
+            return false;
+        }
+        return true;
+
+    }
+
+    public function DeleteTab($tabClass)
+    {
+        $idTab = Tab::getIdFromClassName($tabClass);
+        if($idTab != 0)
+        {
+            $tab = new Tab($idTab);
+            $tab->delete();
+            return true;
+        }
+        return false;
+    }
+
+    public function InitConfigValues()
+    {
+        if (empty(Configuration::get('DESCOMSMS_SENDER'))) {
+            Configuration::updateValue('DESCOMSMS_SENDER', 'aviso');
+        }
+        if (empty(Configuration::get('DESCOMSMS_CHECK_ORDER_PAY'))) {
+            Configuration::updateValue('DESCOMSMS_CHECK_ORDER_PAY', 'on');
+        }
+        if (empty(Configuration::get('DESCOMSMS_TEXT_ORDER_PAY'))) {
+            Configuration::updateValue('DESCOMSMS_TEXT_ORDER_PAY', '[shop_name]: El pedido con id [order_id] ha sido pagado correctamente.');
+        }
+        if (empty(Configuration::get('DESCOMSMS_CHECK_ORDER_SEND'))) {
+            Configuration::updateValue('DESCOMSMS_CHECK_ORDER_SEND', 'on');
+        }
+        if (empty(Configuration::get('DESCOMSMS_TEXT_ORDER_SEND'))) {
+            Configuration::updateValue('DESCOMSMS_TEXT_ORDER_SEND', '[shop_name]: El pedido con id [order_id] ha sido enviado.');
+        }
+        if (empty(Configuration::get('DESCOMSMS_CHECK_PRODUCT_STOCK'))) {
+            Configuration::updateValue('DESCOMSMS_CHECK_PRODUCT_STOCK', 'off');
+        }
+        if (empty(Configuration::get('DESCOMSMS_TEXT_PRODUCT_STOCK'))) {
+            Configuration::updateValue('DESCOMSMS_TEXT_PRODUCT_STOCK', '[shop_name]: El producto [product_name] vuelve a tener stock ([product_stock] uds. disponibles).');
+        }
+    }
+
+    public function GetModuleVersion($url)
+    {
+        $ch = curl_init();
+    	$timeout = 5;
+    	curl_setopt($ch, CURLOPT_URL, $url);
+    	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    	curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+    	$data = curl_exec($ch);
+    	curl_close($ch);
+    	return $data;
+    }
+
+    public function MyEncrypt($data, $key)
     {
         $encryption_key = base64_decode($key);
         $iv = openssl_random_pseudo_bytes(openssl_cipher_iv_length('aes-256-cbc'));
@@ -266,7 +321,7 @@ class descomsms extends Module
         return base64_encode($encrypted.'::'.$iv);
     }
 
-    public function my_decrypt($data, $key)
+    public function MyDecrypt($data, $key)
     {
         $encryption_key = base64_decode($key);
         list($encrypted_data, $iv) = explode('::', base64_decode($data), 2);
@@ -339,7 +394,23 @@ class descomsms extends Module
         Configuration::updateValue('DESCOMSMS_TEXT_PRODUCT_STOCK', $textStock);
     }
 
-    public function getSMSText($text, $orderId, $productName, $productStock)
+    public function GetPhoneMobile($address, $country)
+    {
+        $mobile = '';
+        if(!empty($address->phone_mobile)){
+            $mobile = $address->phone_mobile;
+        }else{
+            $mobile = $address->phone;
+        }
+        if(substr($mobile,0,1) != '+')
+            $mobile = '+'.$country->call_prefix.$mobile;
+        //if(!preg_match($expresion, $mobile))
+        //    return '';
+
+        return $mobile;
+    }
+
+    public function GetSMSText($text, $orderId, $productName, $productStock)
     {
         $text = str_replace('[shop_name]', Configuration::get('PS_SHOP_NAME'), $text);
         $text = str_replace('[order_id]', $orderId, $text);
@@ -354,16 +425,16 @@ class descomsms extends Module
     **************/
     public function SendSMS($data)
     {
-        error_log(json_encode($data));
-
         try {
             $sms = new \Descom\Sms\Sms(new \Descom\Sms\Auth\AuthUser($data['user'], $data['pass']));
             $message = new \Descom\Sms\Message();
             $message->addTo($data['mobile'])->setSenderID($data['sender'])->setText($data['message']);
             $result = $sms->addMessage($message)
-                    ->setDryrun(false)
+                    ->setDryrun(true)
                     ->send();
 
+            error_log(json_encode($data));
+            error_log(json_encode($result));
             return $result;
         } catch (Exception $e) {
             error_log('DESCOMSMS module - Error sending message: '.$e->getMessage()); //TODO
