@@ -6,7 +6,7 @@ if (!defined('_PS_VERSION_')) {
     exit;
 }
 
-define('VERSION', '1.0.1');
+define('VERSION', '1.0.2');
 define('LATEST_VERSION_URL', 'https://www.descomsms.com/prestashop/latest.php');
 
 class descomsms extends Module
@@ -217,7 +217,8 @@ class descomsms extends Module
                 $addresses = $this->db->ExecuteS($sql);
                 $sended = false;
                 foreach ($addresses as $address) {
-                    if(!($sended && (Configuration::get('DESCOMSMS_CHECK_PRODUCT_STOCK_ALL_ADDRESSES' != 'on')))){
+
+                    if(!$sended || Configuration::get('DESCOMSMS_CHECK_PRODUCT_STOCK_ALL_ADDRESSES') == 'on'){
                         $address = new Address($address['id_address']);
                         $country = new Country($address->id_country);
                         if (!empty($this->GetPhoneMobile($address, $country))) {
@@ -437,7 +438,7 @@ class descomsms extends Module
             $message = new \Descom\Sms\Message();
             $message->addTo($data['mobile'])->setSenderID($data['sender'])->setText($data['message']);
             $result = $sms->addMessage($message)
-                    ->setDryrun(false)
+                    ->setDryrun(true)
                     ->send();
 
             error_log(json_encode($data));
