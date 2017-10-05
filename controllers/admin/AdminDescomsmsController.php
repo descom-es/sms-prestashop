@@ -34,34 +34,33 @@ class AdminDescomsmsController extends ModuleAdminController
     public function initContent()
     {
         $data = [
-          'user'                => strval(Configuration::get('DESCOMSMS_USER')),
-          'pass'                => $this->module->MyDecrypt(Configuration::get('DESCOMSMS_PASS'), Configuration::get('DESCOMSMS_KEY')),
-          'sender'              => strval(Configuration::get('DESCOMSMS_SENDER')),
-          'check_order_pay'     => strval(Configuration::get('DESCOMSMS_CHECK_ORDER_PAY')),
-          'text_order_pay'      => strval(Configuration::get('DESCOMSMS_TEXT_ORDER_PAY')),
-          'check_order_send'    => strval(Configuration::get('DESCOMSMS_CHECK_ORDER_SEND')),
-          'text_order_send'     => strval(Configuration::get('DESCOMSMS_TEXT_ORDER_SEND')),
-          'check_product_stock' => strval(Configuration::get('DESCOMSMS_CHECK_PRODUCT_STOCK')),
+          'user'                               => strval(Configuration::get('DESCOMSMS_USER')),
+          'pass'                               => $this->module->MyDecrypt(Configuration::get('DESCOMSMS_PASS'), Configuration::get('DESCOMSMS_KEY')),
+          'sender'                             => strval(Configuration::get('DESCOMSMS_SENDER')),
+          'check_order_pay'                    => strval(Configuration::get('DESCOMSMS_CHECK_ORDER_PAY')),
+          'text_order_pay'                     => strval(Configuration::get('DESCOMSMS_TEXT_ORDER_PAY')),
+          'check_order_send'                   => strval(Configuration::get('DESCOMSMS_CHECK_ORDER_SEND')),
+          'text_order_send'                    => strval(Configuration::get('DESCOMSMS_TEXT_ORDER_SEND')),
+          'check_product_stock'                => strval(Configuration::get('DESCOMSMS_CHECK_PRODUCT_STOCK')),
           'check_product_stock_all_addresses'  => strval(Configuration::get('DESCOMSMS_CHECK_PRODUCT_STOCK_ALL_ADDRESSES')),
-          'text_product_stock'  => strval(Configuration::get('DESCOMSMS_TEXT_PRODUCT_STOCK')),
-          'version'             => strval($this->module->version),
-          'need_update'         => false,
+          'text_product_stock'                 => strval(Configuration::get('DESCOMSMS_TEXT_PRODUCT_STOCK')),
+          'version'                            => strval($this->module->version),
+          'need_update'                        => false,
         ];
         $data['credits'] = $this->module->GetCreditsSMS($data);
         $data['senders'] = $this->module->GetSendersSMS($data);
 
         $versionLatest = json_decode($this->module->GetModuleVersion($this->module->versionURL));
-        if(!empty($versionLatest)){
+        if (!empty($versionLatest)) {
             $data['version_latest'] = $versionLatest->version;
             $data['version_latest_url'] = $versionLatest->downloadURL;
-            if((int)str_replace('.','',$data['version']) < (int)str_replace('.','',$data['version_latest']))
+            if ((int) str_replace('.', '', $data['version']) < (int) str_replace('.', '', $data['version_latest'])) {
                 $data['need_update'] = true;
-        }
-        else{
+            }
+        } else {
             $data['version_latest'] = $this->l('Unable to get latest version.');
             $data['version_latest_url'] = '';
         }
-
 
         $this->context->smarty->assign($data);
 
