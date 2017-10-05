@@ -9,7 +9,7 @@ Our [Module webpage](https://www.descomsms.com) is available [here](https://www.
 
 ## Installation
 
-You can install it from Prestashop backend module's section, upload Zip package that you can found [here](https://www.descomsms.com/downloads/prestashop/descomsms.zip).
+You can install it from Prestashop backend module's section, upload Zip package that you can found [here](https://www.descomsms.com/download/prestashop/descomsms.zip).
 
 ## Usage
 
