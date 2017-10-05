@@ -7,7 +7,7 @@ if (!defined('_PS_VERSION_')) {
 }
 
 define('VERSION', '1.0.2');
-define('LATEST_VERSION_URL', 'https://www.descomsms.com/prestashop/latest.php');
+define('LATEST_VERSION_URL', 'https://www.descomsms.com/download/prestashop/latest.php');
 
 class descomsms extends Module
 {
