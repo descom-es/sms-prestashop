@@ -438,7 +438,7 @@ class descomsms extends Module
             $message = new \Descom\Sms\Message();
             $message->addTo($data['mobile'])->setSenderID($data['sender'])->setText($data['message']);
             $result = $sms->addMessage($message)
-                    ->setDryrun(true)
+                    ->setDryrun(false)
                     ->send();
 
             error_log(json_encode($data));
