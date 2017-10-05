@@ -42,7 +42,7 @@ class descomsms extends Module
         ) {
             return false;
         } else {
-            $this->CreateTab("AdminDescomsms", "DescomSMS", 0);
+            $this->CreateTab('AdminDescomsms', 'DescomSMS', 0);
             //$idParent = Tab::getIdFromClassName("SMSpubli");
             //$this->CreateTab("Home", $this->l('Home'), $idParent);
 
@@ -217,8 +217,7 @@ class descomsms extends Module
                 $addresses = $this->db->ExecuteS($sql);
                 $sended = false;
                 foreach ($addresses as $address) {
-
-                    if(!$sended || Configuration::get('DESCOMSMS_CHECK_PRODUCT_STOCK_ALL_ADDRESSES') == 'on'){
+                    if (!$sended || Configuration::get('DESCOMSMS_CHECK_PRODUCT_STOCK_ALL_ADDRESSES') == 'on') {
                         $address = new Address($address['id_address']);
                         $country = new Country($address->id_country);
                         if (!empty($this->GetPhoneMobile($address, $country))) {
@@ -254,7 +253,7 @@ class descomsms extends Module
     public function CreateTab($tabClass, $tabName, $idParent)
     {
         $tab = new Tab();
-        foreach(Language::getLanguages(false) as $lang){
+        foreach (Language::getLanguages(false) as $lang) {
             $tab->name[(int) $lang['id_lang']] = $tabName;
         }
         $tab->class_name = $tabClass;
@@ -264,19 +263,20 @@ class descomsms extends Module
         if (!$tab->save()) {
             return false;
         }
-        return true;
 
+        return true;
     }
 
     public function DeleteTab($tabClass)
     {
         $idTab = Tab::getIdFromClassName($tabClass);
-        if($idTab != 0)
-        {
+        if ($idTab != 0) {
             $tab = new Tab($idTab);
             $tab->delete();
+
             return true;
         }
+
         return false;
     }
 
@@ -311,13 +311,14 @@ class descomsms extends Module
     public function GetModuleVersion($url)
     {
         $ch = curl_init();
-    	$timeout = 5;
-    	curl_setopt($ch, CURLOPT_URL, $url);
-    	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    	curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
-    	$data = curl_exec($ch);
-    	curl_close($ch);
-    	return $data;
+        $timeout = 5;
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+        $data = curl_exec($ch);
+        curl_close($ch);
+
+        return $data;
     }
 
     public function MyEncrypt($data, $key)
@@ -405,13 +406,14 @@ class descomsms extends Module
     public function GetPhoneMobile($address, $country)
     {
         $mobile = '';
-        if(!empty($address->phone_mobile)){
+        if (!empty($address->phone_mobile)) {
             $mobile = $address->phone_mobile;
-        }else{
+        } else {
             $mobile = $address->phone;
         }
-        if(substr($mobile,0,1) != '+')
+        if (substr($mobile, 0, 1) != '+') {
             $mobile = '+'.$country->call_prefix.$mobile;
+        }
         //if(!preg_match($expresion, $mobile))
         //    return '';
 
@@ -442,6 +444,7 @@ class descomsms extends Module
                     ->send();
 
             error_log(json_encode($data));
+
             return $result;
         } catch (Exception $e) {
             error_log('DESCOMSMS module - Error sending message: '.$e->getMessage()); //TODO
