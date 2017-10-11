@@ -21,3 +21,4 @@ Then you can edit the options from the DescomSMS tab that will be created in the
 - Payment SMS alerts when order payment is accepted.
 - Delivery SMS alerts when order is delivered to the customer.
 - Back in stock SMS alerts for the customers when merchants update their stocks.
+
