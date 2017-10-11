@@ -5,7 +5,7 @@ DescomSMS Prestashop module for sending text messages to mobile numbers.
 
 Create your free account at [Descom SMS](https://www.descomsms.com/crear-usuario.html) and buy credits for SMS sending when required.
 
-Our [Module webpage](https://www.descomsms.com) is available [here](https://www.descomsms.com). Also, we will be happy to assist you at soporte@descom.es for further info on your Prestashop module implementation.
+Our Module webpage is available [here](https://www.descomsms.com/enviar-sms/sms-prestashop.html). Also, we will be happy to assist you at soporte@descom.es for further info on your Prestashop module implementation.
 
 ## Installation
 
