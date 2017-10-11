@@ -1,16 +1,16 @@
 <?php
 
 global $_MODULE;
-$_MODULE = [];
-$_MODULE['<{descomsms}prestashop>descomsms_8b803bd6bbd3ca8fd2663e0aa278eac3'] = 'DescomSMS - Avísale por SMS';
-$_MODULE['<{descomsms}prestashop>descomsms_33e29bd2df713b3d0ea26a498c749d14'] = 'Ayuda a tus clientes a confiar en tu tienda. Confírmales el pago del pedido por SMS, avísales por SMS de que el pedido ha salido y mándales un SMS cuando el artículo que están deseando comprar vuelva a estar en Stock.';
+$_MODULE = array();
+$_MODULE['<{descomsms}prestashop>descomsms_36cec33f20623589262e0dd4edc84ffc'] = 'Descom SMS - Avísale por SMS';
+$_MODULE['<{descomsms}prestashop>descomsms_1f26e16e4159571ad1b05b8c5e1ac954'] = 'Envía notificaciones a los clientes por SMS: confírmales el pago del pedido por SMS, avísales por SMS de que el pedido ha salido y/o mándales un SMS cuando el artículo que no pudieron comprar vuelve a estar en stock.';
 $_MODULE['<{descomsms}prestashop>descomsms_876f23178c29dc2552c0b48bf23cd9bd'] = '¿Estás seguro de que quieres desisnstalarlo?';
 $_MODULE['<{descomsms}prestashop>descomsms_8cf04a9734132302f96da8e113e80ce5'] = 'Inicio';
 $_MODULE['<{descomsms}prestashop>descomsms_fe5d926454b6a8144efce13a44d019ba'] = 'Valor de configuración inválido';
 $_MODULE['<{descomsms}prestashop>descomsms_c888438d14855d7d96a2724ee9c306bd'] = 'Configuración actualizada';
 $_MODULE['<{descomsms}prestashop>descomsms_f4f70727dc34561dfde1a3c529b6205c'] = 'Configuración';
-$_MODULE['<{descomsms}prestashop>descomsms_6a8786d8d595683460abb4d4f49daacd'] = 'Usuario DescomSMS';
-$_MODULE['<{descomsms}prestashop>descomsms_432c20dea84569bc48d08ce43a84a7ed'] = 'Contraseña DescomSMS';
+$_MODULE['<{descomsms}prestashop>descomsms_1d063c92ea6c683789443e1888a931c8'] = 'Usuario Descom SMS';
+$_MODULE['<{descomsms}prestashop>descomsms_b247d639ccbeacfd9806304f43d2acc6'] = 'Contraseña Descom SMS';
 $_MODULE['<{descomsms}prestashop>descomsms_c9cc8cce247e49bae79f15173ce97354'] = 'Guardar';
 $_MODULE['<{descomsms}prestashop>descomsms_630f6dc397fe74e52d5189e2c80f282b'] = 'Volver a la lista';
 $_MODULE['<{descomsms}prestashop>admindescomsmscontroller_42407c3605247c6c4b15aa0a75e3b1fc'] = 'No ha sido posible comprobar la última versión.';

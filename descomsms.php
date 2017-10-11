@@ -6,7 +6,7 @@ if (!defined('_PS_VERSION_')) {
     exit;
 }
 
-define('VERSION', '1.0.2');
+define('VERSION', '1.0.3');
 define('LATEST_VERSION_URL', 'https://www.descomsms.com/download/prestashop/latest.php');
 
 class descomsms extends Module
@@ -25,8 +25,8 @@ class descomsms extends Module
 
         parent::__construct();
 
-        $this->displayName = $this->l('DescomSMS - SMS and let them know');
-        $this->description = $this->l('Turn on SMS notifications to help your customers feeling confident on your site. Send them SMS notification for payment confirmation, order delivery and if you are running out of stock,  keep your customers updated on the availability of their wishlist.');
+        $this->displayName = $this->l('Descom SMS - SMS and let them know');
+        $this->description = $this->l('Turn on SMS notifications, help customers feeling confident on your site. Send SMS notification for payment confirmation, order delivery and product availability.');
 
         $this->confirmUninstall = $this->l('Are you sure you want to uninstall?');
 
@@ -42,7 +42,7 @@ class descomsms extends Module
         ) {
             return false;
         } else {
-            $this->CreateTab('AdminDescomsms', 'DescomSMS', 0);
+            $this->CreateTab('AdminDescomsms', 'Descom SMS', 0);
             //$idParent = Tab::getIdFromClassName("SMSpubli");
             //$this->CreateTab("Home", $this->l('Home'), $idParent);
 
@@ -103,14 +103,14 @@ class descomsms extends Module
             'input' => [
                 [
                     'type'     => 'text',
-                    'label'    => $this->l('DescomSMS user'),
+                    'label'    => $this->l('Descom SMS user'),
                     'name'     => 'DESCOMSMS_USER',
                     'class'    => 'lg',
                     'required' => true,
                 ],
                 [
                     'type'     => 'password',
-                    'label'    => $this->l('DescomSMS password'),
+                    'label'    => $this->l('Descom SMS password'),
                     'name'     => 'DESCOMSMS_PASS',
                     'class'    => 'lg',
                     'required' => true,
