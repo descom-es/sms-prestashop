@@ -23,7 +23,7 @@ class Sms
      *
      * @var string
      */
-    private $app = 'php-sms v1.0.8';
+    private $app = 'php-sms v1.0.10';
 
     /**
      * Define if then sent is dryrun.
@@ -112,16 +112,19 @@ class Sms
      * Add a message in sent.
      *
      * @param \Descom\Sms\Message $message
+     * @param bool                $control
      *
      * @return $this
      */
-    public function addMessage(Message $message)
+    public function addMessage(Message $message, $control = true)
     {
         $message_text = $message->getText();
 
-        foreach ($this->messages as $cur_message) {
-            if ($cur_message->getText() == $message_text) {
-                throw new MessageTextAlreadyExits($message_text);
+        if ($control) {
+            foreach ($this->messages as $cur_message) {
+                if ($cur_message->getText() == $message_text) {
+                    throw new MessageTextAlreadyExits($message_text);
+                }
             }
         }
 
