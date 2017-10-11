@@ -24,10 +24,10 @@ Download Descom SMS-Prestashop module [here](https://www.descomsms.com/enviar-sm
 
 ## Setup
 
-1. Create your free user account at [Descom SMS](https://www.descomsms.com/crear-usuario.html). User registration is free and completed online.
-2. Once you have registered your Descom SMS user, go to modules tab at Prestashop, find Descom SMS and click the 'Configuraton' button.
+1. Create your free user account at [**Descom SMS**](https://www.descomsms.com/crear-usuario.html). User registration is free and completed online.
+2. Once registered, go to modules tab at Prestashop, find **Descom SMS** and click the 'Configuraton' button.
 3. Enter your username and password.
-4. Find 'Descom SMS' at Prestashop main menu, and edit your profile.
+4. Find '**Descom SMS**' at Prestashop main menu, and edit your profile.
 
 ## Usage
 
