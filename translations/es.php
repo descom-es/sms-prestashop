@@ -1,7 +1,7 @@
 <?php
 
 global $_MODULE;
-$_MODULE = array();
+$_MODULE = [];
 $_MODULE['<{descomsms}prestashop>descomsms_36cec33f20623589262e0dd4edc84ffc'] = 'Descom SMS - Avísale por SMS';
 $_MODULE['<{descomsms}prestashop>descomsms_1f26e16e4159571ad1b05b8c5e1ac954'] = 'Envía notificaciones a los clientes por SMS: confírmales el pago del pedido por SMS, avísales por SMS de que el pedido ha salido y/o mándales un SMS cuando el artículo que no pudieron comprar vuelve a estar en stock.';
 $_MODULE['<{descomsms}prestashop>descomsms_876f23178c29dc2552c0b48bf23cd9bd'] = '¿Estás seguro de que quieres desisnstalarlo?';
