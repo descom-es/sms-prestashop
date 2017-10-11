@@ -1,10 +1,11 @@
 <?php
 
 global $_MODULE;
-$_MODULE = [];
-$_MODULE['<{descomsms}prestashop>descomsms_f4f1671456d4ef06ca3621fb47c36006'] = 'DescomSMS';
-$_MODULE['<{descomsms}prestashop>descomsms_173db619910d07023188116bb0506da2'] = 'Módulo de envío de SMS';
+$_MODULE = array();
+$_MODULE['<{descomsms}prestashop>descomsms_8b803bd6bbd3ca8fd2663e0aa278eac3'] = 'DescomSMS - Avísale por SMS';
+$_MODULE['<{descomsms}prestashop>descomsms_33e29bd2df713b3d0ea26a498c749d14'] = 'Ayuda a tus clientes a confiar en tu tienda. Confírmales el pago del pedido por SMS, avísales por SMS de que el pedido ha salido y mándales un SMS cuando el artículo que están deseando comprar vuelva a estar en Stock.';
 $_MODULE['<{descomsms}prestashop>descomsms_876f23178c29dc2552c0b48bf23cd9bd'] = '¿Estás seguro de que quieres desisnstalarlo?';
+$_MODULE['<{descomsms}prestashop>descomsms_8cf04a9734132302f96da8e113e80ce5'] = 'Inicio';
 $_MODULE['<{descomsms}prestashop>descomsms_fe5d926454b6a8144efce13a44d019ba'] = 'Valor de configuración inválido';
 $_MODULE['<{descomsms}prestashop>descomsms_c888438d14855d7d96a2724ee9c306bd'] = 'Configuración actualizada';
 $_MODULE['<{descomsms}prestashop>descomsms_f4f70727dc34561dfde1a3c529b6205c'] = 'Configuración';
@@ -15,14 +16,16 @@ $_MODULE['<{descomsms}prestashop>descomsms_630f6dc397fe74e52d5189e2c80f282b'] = 
 $_MODULE['<{descomsms}prestashop>admindescomsmscontroller_42407c3605247c6c4b15aa0a75e3b1fc'] = 'No ha sido posible comprobar la última versión.';
 $_MODULE['<{descomsms}prestashop>descomsms_home_997c785cce775d7c1014ffbd6e446d50'] = 'Información general';
 $_MODULE['<{descomsms}prestashop>descomsms_home_8f9bfe9d1345237cb3b2b205864da075'] = 'Usuario';
-$_MODULE['<{descomsms}prestashop>descomsms_home_16ad069644e4d2beb3a554007a0ebf7d'] = 'Créditos disponibles';
+$_MODULE['<{descomsms}prestashop>descomsms_home_1f29c8fe5a733d983dcd7efa4fe69680'] = 'Saldo SMS';
+$_MODULE['<{descomsms}prestashop>descomsms_home_928735d6f2c63bee316dd511c8ccaf55'] = 'créditos';
+$_MODULE['<{descomsms}prestashop>descomsms_home_ce3ca9aa920bb6f31fe8ea047363d862'] = 'Comprar SMS';
 $_MODULE['<{descomsms}prestashop>descomsms_home_011fedf4050817b8826f95a53d9555b2'] = 'Versión actual';
 $_MODULE['<{descomsms}prestashop>descomsms_home_9ca445b9db010a99239196af5ac3a8b9'] = 'Última versión';
 $_MODULE['<{descomsms}prestashop>descomsms_home_06933067aafd48425d67bcb01bba5cb6'] = 'Actualizar';
-$_MODULE['<{descomsms}prestashop>descomsms_home_0d977f0c8eabea6ef0b47df19357220f'] = 'Selección de remitente';
-$_MODULE['<{descomsms}prestashop>descomsms_home_02d4482d332e1aef3437cd61c9bcc624'] = 'Ponte en contacto';
-$_MODULE['<{descomsms}prestashop>descomsms_home_17ec6b9ca0d1cd7b0560d9245ffdae2a'] = 'para añadir nuevos remitentes.';
+$_MODULE['<{descomsms}prestashop>descomsms_home_c05ccfdebe34eed0ed36276975195f46'] = 'Elegir remitente';
 $_MODULE['<{descomsms}prestashop>descomsms_home_8aace3ec18d83874d22850b7eee93c7d'] = 'Remitente';
+$_MODULE['<{descomsms}prestashop>descomsms_home_6754b7d999c970f6843279fbdb510953'] = 'Mejora los SMS, envía los mensajes SMS con el nombre de tu tienda o marca:';
+$_MODULE['<{descomsms}prestashop>descomsms_home_12fa966b6ad298478d668dfb61162573'] = 'añadir remitente';
 $_MODULE['<{descomsms}prestashop>descomsms_home_c9cc8cce247e49bae79f15173ce97354'] = 'Guardar';
 $_MODULE['<{descomsms}prestashop>descomsms_home_717955d21550d513f8b3b8ba62e61501'] = 'Envío SMS a clientes';
 $_MODULE['<{descomsms}prestashop>descomsms_home_20f73188db76912440752807c87ce399'] = 'Aviso pago pedido realizado';
