@@ -9,7 +9,7 @@ Our [Module webpage](https://www.descomsms.com) is available [here](https://www.
 
 ## Installation
 
-You can install it from Prestashop backend module's section, upload Zip package that you can found [here](https://www.descomsms.com/download/prestashop/descomsms.zip).
+You can install it from Prestashop backend module's section, upload Zip package that you can found [here](https://www.descomsms.com/download/descom-sms-prestashop.zip).
 
 ## Usage
 
@@ -19,7 +19,5 @@ Then you can edit the options from the DescomSMS tab that will be created in the
 
 ## Features
 - Payment SMS alerts when order payment is accepted.
-- Delivery SMS alerts when order is delivered to the customer. 
-- Back in stock SMS alerts for the customers when merchants update their stocks. 
-
-
+- Delivery SMS alerts when order is delivered to the customer.
+- Back in stock SMS alerts for the customers when merchants update their stocks.

@@ -3,7 +3,7 @@
     <div class="panel-body" style="font-size: 1.2em;">
         <div class="col-md-6">
             <p><strong>{l s='User' mod='descomsms'}: </strong> {$user}</p>
-            <p><strong>{l s='Available credit' mod='descomsms'}: </strong> {$credits}</p>
+            <p><strong>{l s='SMS Balance' mod='descomsms'}: </strong> {$credits} {l s='credits' mod='descomsms'} - <a href="https://www.descomsms.com/recargas/" target='blank_'>{l s='Buy SMS' mod='descomsms'}</a> </p>
         </div>
         <div class="col-md-6">
             <p><strong>{l s='Current version' mod='descomsms'}: </strong> {$version}</p>
@@ -16,9 +16,8 @@
 </div>
 
 <div class="panel panel-default">
-    <div class="panel-heading">{l s='Sender selection' mod='descomsms'}</div>
+    <div class="panel-heading">{l s='Select your sender ID' mod='descomsms'}</div>
     <div class="panel-body">
-      <p><a href="https://www.descom.es/contacto" target="_blank">{l s='Contact us' mod='descomsms'}</a> {l s='to add new senders.' mod='descomsms'}</p><br>
         <form id="formSender" action="{$link->getAdminLink('AdminDescomsms')|escape:'htmlall':'utf-8'}" method="post">
             <div class="form-group">
                 <label for="selectSender">{l s='Sender' mod='descomsms'}</label>
@@ -28,6 +27,7 @@
                     {/foreach}
                 </select>
             </div>
+            <p>{l s='Gain efficiency, send SMS messages with the name of your store or brand:' mod='descomsms'} <a href='https://www.descomsms.com/enviar-sms/sms-prestashop.html#remitente-sms' target='blank_'>{l s='add sender ID' mod='descomsms'}</a></p><br>
             <button name="submit_sender" type="submit" class="btn btn-default">{l s='Save' mod='descomsms'}</button>
         </form>
     </div>

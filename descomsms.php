@@ -14,9 +14,9 @@ class descomsms extends Module
     public function __construct()
     {
         $this->name = 'descomsms';
-        $this->tab = 'others';
+        $this->tab = 'emailing';
         $this->version = VERSION;
-        $this->author = 'Descom';
+        $this->author = 'descomSMS.com';
         $this->need_instance = 0;
         $this->is_configurable = 0;
         $this->ps_versions_compliancy = ['min' => '1.6', 'max' => _PS_VERSION_];
@@ -25,8 +25,8 @@ class descomsms extends Module
 
         parent::__construct();
 
-        $this->displayName = $this->l('DescomSMS');
-        $this->description = $this->l('Send SMS module');
+        $this->displayName = $this->l('DescomSMS - SMS and let them know');
+        $this->description = $this->l('Turn on SMS notifications to help your customers feeling confident on your site. Send them SMS notification for payment confirmation, order delivery and if you are running out of stock,  keep your customers updated on the availability of their wishlist.');
 
         $this->confirmUninstall = $this->l('Are you sure you want to uninstall?');
 
