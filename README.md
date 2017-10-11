@@ -14,7 +14,7 @@ Improve customer order notifications on your Prestashop e-commerce.
 
 # Download SMS-Prestashop
 
-Download Descom SMS-Prestashop module [here](https://www.descomsms.com/enviar-sms/sms-prestashop.html).
+Download Descom [**SMS-Prestashop module**](https://www.descomsms.com/enviar-sms/sms-prestashop.html).
 
 ## Installation
 
@@ -31,4 +31,4 @@ Download Descom SMS-Prestashop module [here](https://www.descomsms.com/enviar-sm
 
 ## Usage
 
-SMS notification are automatically sent according to your profile.
+SMS notifications are automatically sent according to your profile.
