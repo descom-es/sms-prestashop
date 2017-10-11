@@ -3,13 +3,13 @@
 # sms-prestashop
 DescomSMS Prestashop module for sending text messages to mobile numbers.
 
-Create your free account at [Descom SMS](https://www.descomsms.com) and buy credits for SMS sending when required.
+Create your free account at [Descom SMS](https://www.descomsms.com/crear-usuario.html) and buy credits for SMS sending when required.
 
-Our [Module webpage](https://www.descomsms.com) is available [here](https://www.descomsms.com). Also, we will be happy to assist you at soporte@descom.es for further info on your Prestashop module implementation.
+Our Module webpage is available [here](https://www.descomsms.com/enviar-sms/sms-prestashop.html). Also, we will be happy to assist you at soporte@descom.es for further info on your Prestashop module implementation.
 
 ## Installation
 
-You can install it from Prestashop backend module's section, upload Zip package that you can found [here](https://www.descomsms.com/prestashop/latest.php).
+You can install it from Prestashop backend module's section, upload Zip package that you can found [here](https://www.descomsms.com/download/descom-sms-prestashop.zip).
 
 ## Usage
 
@@ -17,9 +17,8 @@ After instalation you need to configure module with your DescomSMS credentials a
 
 Then you can edit the options from the DescomSMS tab that will be created in the Prestashop menu.
 
-### Features
+## Features
 - Payment SMS alerts when order payment is accepted.
-- Delivery SMS alerts when order is delivered to the customer. 
-- Back in stock SMS alerts for the customers when merchants update their stocks. 
-
+- Delivery SMS alerts when order is delivered to the customer.
+- Back in stock SMS alerts for the customers when merchants update their stocks.
 
