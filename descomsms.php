@@ -42,11 +42,10 @@ class descomsms extends Module
         ) {
             return false;
         } else {
-            if (version_compare(_PS_VERSION_, '1.7.0', '>=')){
+            if (version_compare(_PS_VERSION_, '1.7.0', '>=')) {
                 $id_parent = (int) Tab::getIdFromClassName('CONFIGURE');
                 $this->CreateTab('AdminDescomsms', 'Descom SMS', $id_parent);
-            }
-            else{
+            } else {
                 $this->CreateTab('AdminDescomsms', 'Descom SMS', 0);
             }
             $this->InitConfigValues();
