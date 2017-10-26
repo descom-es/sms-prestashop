@@ -1,6 +1,6 @@
 {
     "require": {
         "guzzlehttp/guzzle": "5.3.1",
-        "descom/php-sms": "^1.0"
+        "descom/sms-php": "^1.0"
     }
 }
