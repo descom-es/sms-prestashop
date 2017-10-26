@@ -6,7 +6,7 @@ if (!defined('_PS_VERSION_')) {
     exit;
 }
 
-define('VERSION', '1.0.3');
+define('VERSION', '1.0.4');
 define('LATEST_VERSION_URL', 'https://www.descomsms.com/download/prestashop/latest.php');
 
 class descomsms extends Module
@@ -42,10 +42,12 @@ class descomsms extends Module
         ) {
             return false;
         } else {
-            $this->CreateTab('AdminDescomsms', 'Descom SMS', 0);
-            //$idParent = Tab::getIdFromClassName("SMSpubli");
-            //$this->CreateTab("Home", $this->l('Home'), $idParent);
-
+            if (version_compare(_PS_VERSION_, '1.7.0', '>=')) {
+                $id_parent = (int) Tab::getIdFromClassName('CONFIGURE');
+                $this->CreateTab('AdminDescomsms', 'Descom SMS', $id_parent);
+            } else {
+                $this->CreateTab('AdminDescomsms', 'Descom SMS', 0);
+            }
             $this->InitConfigValues();
         }
     }

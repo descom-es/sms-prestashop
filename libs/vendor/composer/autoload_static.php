@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInite199b08ed532db2c5c0755c890833792
+class ComposerStaticInit31c22175a255482a24e9b916b3f6f90a
 {
     public static $files = array (
         'ad155f8f1cf0d418fe49e248db8c661b' => __DIR__ . '/..' . '/react/promise/src/functions_include.php',
@@ -46,15 +46,15 @@ class ComposerStaticInite199b08ed532db2c5c0755c890833792
         ),
         'Descom\\Sms\\' => 
         array (
-            0 => __DIR__ . '/..' . '/descom/php-sms/src',
+            0 => __DIR__ . '/..' . '/descom/sms-php/src',
         ),
     );
 
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInite199b08ed532db2c5c0755c890833792::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInite199b08ed532db2c5c0755c890833792::$prefixDirsPsr4;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit31c22175a255482a24e9b916b3f6f90a::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit31c22175a255482a24e9b916b3f6f90a::$prefixDirsPsr4;
 
         }, null, ClassLoader::class);
     }

@@ -4,19 +4,19 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "f204c90e12400a1af53aa8d7da4e0d19",
+    "content-hash": "8a6d07c5947129af0d3c06c31ac16f63",
     "packages": [
         {
-            "name": "descom/php-sms",
+            "name": "descom/sms-php",
             "version": "v1.0.10",
             "source": {
                 "type": "git",
-                "url": "https://github.com/descom-es/php-sms.git",
+                "url": "https://github.com/descom-es/sms-php.git",
                 "reference": "779cd0a04c74652dde5434641fc73887ae58ea2a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/descom-es/php-sms/zipball/779cd0a04c74652dde5434641fc73887ae58ea2a",
+                "url": "https://api.github.com/repos/descom-es/sms-php/zipball/779cd0a04c74652dde5434641fc73887ae58ea2a",
                 "reference": "779cd0a04c74652dde5434641fc73887ae58ea2a",
                 "shasum": ""
             },
