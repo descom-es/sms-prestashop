@@ -1,24 +1,34 @@
 [![StyleCI](https://styleci.io/repos/104207119/shield?branch=1.0)](https://styleci.io/repos/104207119)
 
 # sms-prestashop
-DescomSMS Prestashop module for sending text messages to mobile numbers.
 
-Create your free account at [Descom SMS](https://www.descomsms.com/crear-usuario.html) and buy credits for SMS sending when required.
+Automatically send **SMS notification** upon order payment, order delivery or product availability.
 
-Our Module webpage is available [here](https://www.descomsms.com/enviar-sms/sms-prestashop.html). Also, we will be happy to assist you at soporte@descom.es for further info on your Prestashop module implementation.
+Improve customer order notifications on your Prestashop e-commerce.
+
+# SMS Alerts
+
+- SMS alert upon order payment completion.
+- SMS when order is sent out for delivery.
+- Back in stock SMS alerts, when a product is again available for sale.
+
+# Download SMS-Prestashop
+
+Download Descom [**SMS-Prestashop module**](https://www.descomsms.com/enviar-sms/sms-prestashop.html).
 
 ## Installation
 
-You can install it from Prestashop backend module's section, upload Zip package that you can found [here](https://www.descomsms.com/download/descom-sms-prestashop.zip).
+1. Login to your PrestaShop backend.
+2. Go to 'Modules' tab and click 'Add a module from my computer'.
+3. Select 'descom-sms-prestashop.zip' file on your computer.
+
+## Setup
+
+1. Create your free user account at [**Descom SMS**](https://www.descomsms.com/crear-usuario.html). User registration is free and completed online.
+2. Once registered, go to modules tab at Prestashop, find **Descom SMS** and click the 'Configuraton' button.
+3. Enter your username and password.
+4. Find '**Descom SMS**' at Prestashop main menu, and edit your profile.
 
 ## Usage
 
-After instalation you need to configure module with your DescomSMS credentials at module's configuration page.
-
-Then you can edit the options from the DescomSMS tab that will be created in the Prestashop menu.
-
-## Features
-- Payment SMS alerts when order payment is accepted.
-- Delivery SMS alerts when order is delivered to the customer.
-- Back in stock SMS alerts for the customers when merchants update their stocks.
-
+SMS notifications are automatically sent according to your profile.
