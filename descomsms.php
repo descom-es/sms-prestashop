@@ -192,7 +192,7 @@ class descomsms extends Module
 
             if (!empty($data['mobile'])) {
                 $result = $this->SendSMS($data);
-                //error_log(json_encode($result)); //TODO
+            //error_log(json_encode($result)); //TODO
             } else {
                 error_log('There is no mobile phone number for this address:'.$order->id_address_delivery); //TODO
             }
